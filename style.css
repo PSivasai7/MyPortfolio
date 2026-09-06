@@ -1,0 +1,334 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: #fff;
+    color: black;
+    position: relative;
+    scroll-behavior: smooth;
+    /* color: #ec9518; */
+
+}
+
+:root {
+    /* --bg:rgb(102, 100, 100); */
+    --pc: #ec9518;
+    --sc: red;
+    --ac: blue;
+}
+
+header {
+    /* background-color: #ffffffde;
+    height: 70vh;
+    width: 70%;
+    border-radius: 22px; */
+}
+
+.navbar {
+    display: inline-flex;
+    border: 3px ridge rgb(0, 0, 0);
+    padding: 30px 10px;
+    border-radius: 33px;
+    height: 150px;
+    overflow: hidden;
+    position: fixed;
+    top: 176px;
+    right: 16px;
+    transition-duration: 1s;
+    background-color: #ffffff53;
+    cursor: pointer;
+
+}
+
+.navbar ul li {
+    list-style: none;
+    display: flex;
+}
+
+.navbox2 {
+    /* display: none; */
+    /* color: white; */
+}
+
+.navbox2 li a {
+    color: black;
+
+}
+
+.fa-solid,
+.fa-regular {
+    font-size: 25px;
+    margin: 15px auto;
+    cursor: pointer;
+}
+
+header {
+    height: 5vh;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid black;
+    margin: 20px;
+
+}
+
+.logo {}
+
+.themechange {
+    display: flex;
+
+}
+
+.Introsec {
+    height: 80vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.toggle {
+    height: 400px;
+}
+
+.dark {
+    background-color: black;
+    color: white;
+
+}
+
+.aboutsec {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+
+}
+
+.aboutsec h1 {
+    --s: 0.1em;
+    /* the thickness of the line */
+    --c: #2c4bff;
+    /* the color */
+    display: inline-block;
+    font-family: system-ui, sans-serif;
+    font-size: 3rem;
+    cursor: pointer;
+    color: #0000;
+    padding-bottom: var(--s);
+    background:
+        linear-gradient(90deg, var(--c) 50%, #000 0) calc(100% - var(--_p, 0%))/200% 100%,
+        linear-gradient(var(--c) 0 0) 0% 100%/var(--_p, 0%) var(--s) no-repeat;
+    -webkit-background-clip: text, padding-box;
+    background-clip: text, padding-box;
+    transition: 0.5s;
+    /* margin-bottom: 20px; */
+}
+
+h1:hover {
+    --_p: 100%;
+}
+
+.aboutsec .boxes {
+    display: flex;
+}
+
+.box1::before {
+    content: 'Sivasai Pepakayala';
+
+
+    /* background-color: red; */
+    position: relative;
+    opacity: 0;
+    top: 340px;
+    left: 20px;
+    z-index: 21;
+    transition-duration: 1s;
+    background-color: #6ea3ff;
+    padding: 10px 90px;
+    /* border-radius: 50%; */
+
+}
+
+.box1:hover::before {
+    top: 280px;
+    left: 20px;
+    opacity: 1;
+    /* border-radius: 50%; */
+}
+
+.box1 {
+    flex-grow: 2;
+    /* flex-shrink: 1; */
+    height: 350px;
+    width: 25%;
+    overflow: hidden;
+    border: 5px ridge rgb(0, 0, 0);
+    border-radius: 50%;
+    background-color: transparent;
+
+
+}
+
+.box1 img {
+    /* border-radius: 50%; */
+    position: relative;
+    height: inherit;
+    width: 100%;
+    transition: all ease-in 1s;
+    /* z-index: -1; */
+
+}
+
+
+
+.box1 img:hover {
+    cursor: pointer;
+    transform: translateY(-25px);
+    /* background-color: #585555; */
+    /* filter: blur(2px); */
+    /* border: 10px solid red; */
+}
+
+.box2 {
+    width: 75%;
+    padding: 62px 57px;
+    line-height: 33px;
+    text-wrap: auto;
+    letter-spacing: 1px;
+    /* line-break: loose; */
+    /* text-indent: 19px; */
+}
+
+.skills {
+    height: 100vh;
+    width: 100%;
+    /* border: 2px solid black; */
+}
+
+.skillboxes {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto;
+    grid-area: auto;
+    justify-content: space-around;
+    /* display: flex; */
+    /* grid-template-rows: auto auto auto; */
+    /* grid-row: auto auto auto; */
+}
+
+.skillbox {
+    flex-direction: column-reverse;
+    /* box-shadow: inset 5px 5px .2px .2px rgb(85, 85, 85); */
+    border-radius: 11px;
+    padding: 10px 10px;
+    margin: 20px 10px;
+    /* height: 100px;
+       width: 100px;  */
+    box-sizing: border-box;
+    cursor: pointer;
+    transition-duration: 1s;
+    border-left: 12px groove rgb(255, 255, 255);
+
+}
+
+/* .skillbox::before{
+    content: ' ';
+    position:relative;
+    display: inline-block;
+    background-color: #fff;
+    height: 2px;
+    width: 20px;
+    top: -40px;
+    left: -35px;
+    border: 4px solid ;
+  
+} */
+
+
+.skillbox:hover {
+    transform: matrix(33) box-shadow: inset -5px -5px .2px .2px rgb(85, 85, 85);
+
+
+}
+
+.skillbox a {
+    text-decoration: none;
+    color: #000;
+
+}
+
+.skillbox img {
+    height: 100px;
+    width: 100px;
+}
+
+
+
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30vh;
+    z-index: 100;
+
+    background: rgb(255, 255, 255);
+    background: linear-gradient(0deg,
+            rgba(255, 255, 255, 1) 75%,
+            rgba(255, 255, 255, 0.9) 80%,
+            rgba(255, 255, 255, 0.25) 95%,
+            rgba(255, 255, 255, 0) 100%);
+}
+
+.text {
+    font-family: "Yanone Kaffeesatz";
+    font-size: 80px;
+    display: flex;
+    position: absolute;
+    top: 20vh;
+    left: 50%;
+    transform: translateX(-50%);
+    user-select: none;
+
+    .wrapper {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 20px;
+
+        .letter {
+            transition: ease-out 1s;
+            transform: translateY(30%);
+        }
+
+        .shadow {
+            transform: scale(1, -1);
+            color: #999999;
+            transition: ease-in 5s, ease-out 5s;
+        }
+
+        &:hover {
+            .letter {
+                transform: translateY(-50%);
+            }
+
+            .shadow {
+                opacity: 0;
+                transform: translateY(50%);
+            }
+        }
+    }
+}
+
+.text::before {
+    content: 'This is';
+    font-size: 20px;
+    width: 100px;
+    position: relative;
+    top: 49px;
+    left: 50px;
+}

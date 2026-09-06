@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sivasai Pepakayala - Portfolio</title>
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Google Fonts for Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Yanone+Kaffeesatz:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Light Theme Variables */
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --nav-bg: rgba(255, 255, 255, 0.7);
+            --card-bg: #f5f5f5;
+            --border-color: #000000;
+            --accent-color: #2c4bff;
+            --accent-hover: #1a32b3;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark {
+            /* Dark Theme Variables */
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --nav-bg: rgba(30, 30, 30, 0.8);
+            --card-bg: #1e1e1e;
+            --border-color: #444444;
+            --accent-color: #6ea3ff;
+            --accent-hover: #96bbff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Inter', 'Trebuchet MS', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            position: relative;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        section {
+            padding: 80px 10%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        header {
+            height: 70px;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--border-color);
+            font-weight: 800;
+            font-size: 1.2rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--bg-color);
+            z-index: 1000;
+            transition: 0.4s;
+        }
+
+        .logo {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+
+        .navbar {
+            display: flex;
+            flex-direction: column;
+            border: 3px solid var(--border-color);
+            padding: 15px 10px;
+            border-radius: 33px;
+            height: 140px;
+            overflow: hidden;
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 20px;
+            transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            z-index: 1001;
+            box-shadow: var(--shadow);
+        }
+
+        .navbar.toggle {
+            height: 480px;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .navbox2 {
+            margin-top: 10px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .navbar.toggle .navbox2 {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .navbar a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover,
+        .fa-solid:hover,
+        .fa-regular:hover {
+            color: var(--accent-color);
+        }
+
+        .fa-solid,
+        .fa-regular {
+            font-size: 25px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .fa-solid:active,
+        .fa-regular:active {
+            transform: scale(0.9);
+        }
+
+        .Introsec {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 70px;
+        }
+
+        .text {
+            font-family: "Yanone Kaffeesatz", sans-serif;
+            font-size: clamp(40px, 8vw, 90px);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            user-select: none;
+            text-align: center;
+            position: relative;
+        }
+
+        .text::before {
+            content: 'Hi, I am';
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(16px, 2vw, 24px);
+            position: absolute;
+            top: -30px;
+            left: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .wrapper {
+            padding: 0 5px;
+            position: relative;
+            cursor: default;
+        }
+
+        .space {
+            width: 20px;
+            /* Space between names */
+        }
+
+        .wrapper .letter {
+            transition: ease-out 0.4s;
+            transform: translateY(0%);
+            display: inline-block;
+        }
+
+        .wrapper .shadow {
+            transform: scale(1, -1);
+            color: var(--border-color);
+            opacity: 0.3;
+            transition: ease-in 0.4s, ease-out 0.4s;
+            position: absolute;
+            bottom: -80%;
+            left: 5px;
+        }
+
+        .wrapper:hover .letter {
+            transform: translateY(-30%);
+            color: var(--accent-color);
+        }
+
+        .wrapper:hover .shadow {
+            opacity: 0;
+            transform: translateY(30%);
+        }
+
+        .section-title {
+            --s: 0.1em;
+            --c: var(--accent-color);
+            display: inline-block;
+            font-family: system-ui, sans-serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            cursor: pointer;
+            color: transparent;
+            padding-bottom: var(--s);
+            background:
+                linear-gradient(90deg, var(--c) 50%, var(--text-color) 0) calc(100% - var(--_p, 0%))/200% 100%,
+                linear-gradient(var(--c) 0 0) 0% 100%/var(--_p, 0%) var(--s) no-repeat;
+            -webkit-background-clip: text, padding-box;
+            background-clip: text, padding-box;
+            transition: 0.5s;
+            margin-bottom: 3rem;
+            align-self: flex-start;
+        }
+
+        .section-title:hover {
+            --_p: 100%;
+        }
+
+        .aboutsec .boxes {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .box1 {
+            flex: 0 0 300px;
+            height: 300px;
+            position: relative;
+            border: 5px solid var(--border-color);
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .box1 img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .box1:hover img {
+            transform: scale(1.1);
+        }
+
+        .box1::after {
+            content: 'Sivasai Pepakayala';
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--accent-color);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: 0.4s;
+            white-space: nowrap;
+        }
+
+        .box1:hover::after {
+            bottom: 20px;
+            opacity: 1;
+        }
+
+        .box2 {
+            flex: 1;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            letter-spacing: 0.5px;
+        }
+
+        .skillboxes,
+        .project-grid,
+        .cert-grid,
+        .platform-grid {
+            display: grid;
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .skillboxes {
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        }
+
+        .skillbox {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            border-bottom: 5px solid var(--border-color);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .skillbox:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+            border-color: var(--accent-color);
+        }
+
+        .skillbox img {
+            height: 70px;
+            width: 70px;
+            object-fit: contain;
+        }
+
+        .skillbox label {
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Projects Section */
+        .project-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .pro {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid var(--border-color);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .pro:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .pro h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .pro p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: var(--accent-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            display: inline-block;
+            text-align: center;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* Certificates */
+        .cert-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .cert-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .cert-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cert-card h3 {
+            padding: 15px;
+            font-size: 1.1rem;
+        }
+
+        /* Platforms */
+        .platform-grid {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        .platform-card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 25px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .platform-card:hover {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            transform: scale(1.05);
+        }
+
+        .platform-card i {
+            font-size: 2rem;
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 4rem;
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-info p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-info i {
+            color: var(--accent-color);
+        }
+
+        .contact-form {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .aboutsec .boxes {
+                flex-direction: column;
+            }
+
+            .contact-container {
+                flex-direction: column;
+            }
+
+            .text::before {
+                top: -40px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .navbar {
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">SS.</div>
+        <p>Portfolio</p>
+    </header>
+
+    <div class="navbar" id="nav">
+        <ul class="navbox1">
+            <li id="darkbtn" title="Toggle Theme"><i id="darkmode" class="fa-solid fa-moon"></i> </li>
+            <li id="menubtn" title="Menu"><i id="menuicon" class="fa-solid fa-bars"></i></li>
+
+            <ul class="navbox2">
+                <li><a href="#intro" title="Home"><i class="fa-solid fa-house"></i></a></li>
+                <li><a href="#about" title="About"><i class="fa-regular fa-address-card"></i></a></li>
+                <li><a href="#sk" title="Skills"><i class="fa-solid fa-code"></i></a></li>
+                <li><a href="#proj" title="Projects"><i class="fa-solid fa-briefcase"></i></a></li>
+                <li><a href="#cert" title="Certifications"><i class="fa-solid fa-certificate"></i></a></li>
+                <li><a href="#plat" title="Platforms"><i class="fa-solid fa-laptop-code"></i></a></li>
+                <li><a href="#contact" title="Contact"><i class="fa-solid fa-envelope"></i></a></li>
+            </ul>
+        </ul>
+    </div>
+
+    <section class="Introsec" id="intro">
+        <div class="text">
+            <!-- First Name -->
+            <div class="wrapper">
+                <div class="letter">S</div>
+                <div class="shadow">S</div>
+            </div>
+            <div class="wrapper">
+                <div class="letter">I</div>
+                <div class="shadow">I</div>
+            </div>
+            <div class="wrapper">
+                <div class="letter">V</div>
+                <div class="shadow">V</div>
+            </div>
+            <div class="wrapper">
+                <div class="letter">A</div>
+                <div class="shadow">A</div>
+            </div>
+            <div class="wrapper">
+                <div class="letter">S</div>
+                <div class="shadow">S</div>
+            </div>
+            <div class="wrapper">
+                <div class="letter">A</div>
+                <div class="shadow">A</div>
+            </div>
+            <div class="wrapper">
+                <div class="letter">I</div>
+                <div class="shadow">I</div>
+            </div>
+
+            <div class="space"></div>
+
+            <!-- Last Name -->
+            <div class="wrapper">
+                <div class="letter">P</div>
+                <div class="shadow">P</div>
+            </div>
+            <div class="wrapper">
+                <div class="letter">E</div>
+                <div class="shadow">E</div>
+            </div>
+            <div class="wrapper">
+                <div class="letter">P</div>
+                <div class="shadow">P</div>
+            </div>
+            <div class="wrapper">
+                <div class="letter">A</div>
+                <div class="shadow">A</div>
+            </div>
+            <div class="wrapper">
+                <div class="letter">K</div>
+                <div class="shadow">K</div>
+            </div>
+            <div class="wrapper">
+                <div class="letter">A</div>
+                <div class="shadow">A</div>
+            </div>
+            <div class="wrapper">
+                <div class="letter">Y</div>
+                <div class="shadow">Y</div>
+            </div>
+            <div class="wrapper">
+                <div class="letter">A</div>
+                <div class="shadow">A</div>
+            </div>
+            <div class="wrapper">
+                <div class="letter">L</div>
+                <div class="shadow">L</div>
+            </div>
+            <div class="wrapper">
+                <div class="letter">A</div>
+                <div class="shadow">A</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="aboutsec" id="about">
+        <h1 class="section-title">About Me</h1>
+        <div class="boxes">
+            <div class="box box1">
+                <!-- Fallback Placehold image replacing local image -->
+                <img src="https://placehold.co/400x400/2c4bff/ffffff?text=Sivasai" alt="Sivasai Pepakayala">
+            </div>
+            <div class="box box2">
+                Hi! I'm <strong>Pepakayala Sivasai</strong>, a passionate and driven B.Tech CSE student at Pragati
+                Engineering College, graduating in 2027. I'm deeply enthusiastic about technology, especially Full-Stack
+                Web Development, AI tools, and real-world problem solving through code.<br><br>
+
+                Over the past year, I've built several impactful projects including <em>CarbonCount</em>, a web-based
+                carbon
+                footprint calculator, a Face Recognition App, and a Hybrid Chatbot. I'm also certified as a Salesforce
+                AI
+                Associate, and continuously learning tools like Tableau, Vertex AI, and Google Cloud.<br><br>
+
+                With hands-on experience in technologies like JavaScript, React.js, Node.js, MongoDB, MySQL, Java, and
+                Python, I enjoy turning ideas into scalable, user-friendly web applications.<br><br>
+
+                When I’m not coding, I’m exploring new tech, participating in hackathons, or working on self-growth
+                through learning platforms and real-world collaborations.
+            </div>
+        </div>
+    </section>
+
+    <section class="skills" id="sk">
+        <h2 class="section-title">My Skills</h2>
+        <div class="skillboxes">
+            <a href="https://en.wikipedia.org/wiki/Java_(programming_language)" target="_blank" class="skillbox">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
+                <label>Java</label>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/Python_(programming_language)" target="_blank" class="skillbox">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+                <label>Python</label>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/C%2B%2B" target="_blank" class="skillbox">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
+                    alt="C++">
+                <label>C++</label>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/HTML" target="_blank" class="skillbox">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML">
+                <label>HTML5</label>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/CSS" target="_blank" class="skillbox">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS">
+                <label>CSS3</label>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/JavaScript" target="_blank" class="skillbox">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                    alt="JavaScript">
+                <label>JavaScript</label>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/Node.js" target="_blank" class="skillbox">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js">
+                <label>Node.js</label>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/React_(software)" target="_blank" class="skillbox">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React.js">
+                <label>React.js</label>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/MySQL" target="_blank" class="skillbox">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
+                <label>MySQL</label>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/MongoDB" target="_blank" class="skillbox">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+                    alt="MongoDB">
+                <label>MongoDB</label>
+            </a>
+        </div>
+    </section>
+
+    <section class="ceritificates" id="cert">
+        <h2 class="section-title">Certifications</h2>
+        <div class="cert-grid">
+            <div class="cert-card">
+                <img src="https://placehold.co/600x400/1e1e1e/ffffff?text=Salesforce+AI" alt="Salesforce AI Associate">
+                <h3>Salesforce AI Associate</h3>
+            </div>
+            <div class="cert-card">
+                <img src="https://placehold.co/600x400/1e1e1e/ffffff?text=Tableau" alt="Tableau Certification">
+                <h3>Data Viz with Tableau</h3>
+            </div>
+            <div class="cert-card">
+                <img src="https://placehold.co/600x400/1e1e1e/ffffff?text=Google+Cloud" alt="Google Cloud">
+                <h3>Google Cloud Fundamentals</h3>
+            </div>
+        </div>
+    </section>
+
+    <section class="projects" id="proj">
+        <h2 class="section-title">Projects</h2>
+        <div class="project-grid">
+            <div id="project1" class="pro">
+                <div>
+                    <h2>Traffic Intelligence</h2>
+                    <p>An intelligent system designed to monitor and analyze traffic patterns to optimize flow and
+                        reduce congestion using modern AI heuristics and real-time data analysis.</p>
+                </div>
+                <a href="#" class="btn">View Source</a>
+            </div>
+            <div id="project2" class="pro">
+                <div>
+                    <h2>Portfolio Generator</h2>
+                    <p>A dynamic web application that allows developers to quickly generate and deploy personalized
+                        portfolios with integrated themes and responsive design.</p>
+                </div>
+                <a href="#" class="btn">View Source</a>
+            </div>
+            <div id="project3" class="pro">
+                <div>
+                    <h2>CarbonCount</h2>
+                    <p>A comprehensive web-based calculator that helps users track, understand, and minimize their daily
+                        carbon footprint through intuitive data visualizations.</p>
+                </div>
+                <a href="#" class="btn">View Source</a>
+            </div>
+            <div id="project4" class="pro">
+                <div>
+                    <h2>Hybrid Chatbot</h2>
+                    <p>An advanced chatbot integrating rule-based logic and NLP models to provide seamless customer
+                        support and query resolution.</p>
+                </div>
+                <a href="#" class="btn">View Source</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="platforms" id="plat">
+        <h2 class="section-title">Coding Profiles</h2>
+        <div class="platform-grid">
+            <a href="#" class="platform-card cons1">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" width="30"
+                    height="30" alt="Leetcode"> Leetcode
+            </a>
+            <a href="#" class="platform-card cons2">
+                <i class="fa-solid fa-code"></i> CodeChef
+            </a>
+            <a href="#" class="platform-card cons3">
+                <i class="fa-brands fa-hackerrank"></i> HackerRank
+            </a>
+            <a href="#" class="platform-card cons4">
+                <i class="fa-brands fa-github"></i> GitHub
+            </a>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <h2 class="section-title">Contact Me</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Let's Connect!</h3>
+                <br>
+                <p>I'm currently looking for new opportunities, internships, and exciting projects. Whether you have a
+                    question or just want to say hi, I'll try my best to get back to you!</p>
+                <br>
+                <p><i class="fa-solid fa-envelope"></i> sivasai@example.com</p>
+                <p><i class="fa-solid fa-location-dot"></i> Andhra Pradesh, India</p>
+                <p><i class="fa-solid fa-graduation-cap"></i> Pragati Engineering College</p>
+            </div>
+            <form class="contact-form" onsubmit="event.preventDefault();">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message..." required></textarea>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Sivasai Pepakayala. Built with Passion.</p>
+    </footer>
+
+    <script>
+        // Navbar Toggle Logic
+        let ismenu = true;
+        document.getElementById("menuicon").addEventListener("click", () => {
+            document.getElementById("nav").classList.toggle("toggle");
+            const icon = document.getElementById("menuicon");
+            icon.className = ismenu ? "fa-regular fa-circle-xmark" : "fa-solid fa-bars";
+            ismenu = !ismenu;
+        });
+
+        // Dark/Light Mode Toggle Logic
+        let isdark = false; // Based on initial CSS state
+        document.getElementById("darkbtn").addEventListener("click", () => {
+            document.body.classList.toggle("dark");
+            const icon = document.getElementById("darkmode");
+            isdark = !isdark;
+            icon.className = isdark ? "fa-solid fa-sun" : "fa-solid fa-moon";
+        });
+
+        // Close navbar on link click (for mobile experience)
+        const navLinks = document.querySelectorAll(".navbox2 a");
+        navLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                if (!ismenu) { // If menu is open
+                    document.getElementById("nav").classList.remove("toggle");
+                    document.getElementById("menuicon").className = "fa-solid fa-bars";
+                    ismenu = true;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sivasai Pepakayala | Aether</title>
+
+    <!-- Fonts: Cinzel for divine headings, Montserrat for elegant body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Montserrat:wght@200;400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Three.js for Hyper-realistic 3D Graphics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- GSAP for Cinematic Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- SplitText alternative for character animations -->
+    <script src="https://unpkg.com/split-type"></script>
+
+    <style>
+        :root {
+            --bg-base: #020202;
+            --text-main: #f5f5f7;
+            --text-dim: #888891;
+            --gold: #d4af37;
+            --gold-glow: rgba(212, 175, 55, 0.4);
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+            /* Custom cursor */
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            overscroll-behavior: none;
+        }
+
+        /* Cinematic Film Grain Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        /* Hide Scrollbar */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        #webgl-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: var(--bg-base);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader-ring {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid var(--gold);
+            animation: spin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader-ring::after {
+            content: '';
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            border-radius: 50%;
+            border: 1px dashed var(--gold);
+            animation: spin 3s linear infinite reverse;
+            opacity: 0.5;
+        }
+
+        .loader-text {
+            position: absolute;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            color: var(--gold);
+            text-shadow: 0 0 10px var(--gold-glow);
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .cursor-ring {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10001;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background 0.3s, mix-blend-mode 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cursor-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--text-main);
+            border-radius: 50%;
+        }
+
+        .cursor-ring.active {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            mix-blend-mode: difference;
+            border-color: transparent;
+        }
+
+        .main-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 40px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            mix-blend-mode: difference;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--text-main);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            position: relative;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: 0.3s ease-out;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 120px 10%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero {
+            align-items: center;
+            text-align: center;
+        }
+
+        .title-wrapper {
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 600;
+            line-height: 1.1;
+            background: linear-gradient(to bottom, #ffffff 30%, #888891 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0;
+            margin-top: 20px;
+        }
+
+        .section-header {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            color: var(--text-main);
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .section-header::before {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 2;
+            color: var(--text-dim);
+            font-weight: 200;
+        }
+
+        .about-text span {
+            color: var(--text-main);
+            font-weight: 400;
+        }
+
+        .about-text .highlight {
+            color: var(--gold);
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+        }
+
+        /* Aesthetic Stat Counters */
+        .stats-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .stat-box {
+            border-left: 1px solid var(--glass-border);
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .stat-box::before {
+            content: '';
+            position: absolute;
+            left: -2px;
+            top: 0;
+            width: 3px;
+            height: 0;
+            background: var(--gold);
+            transition: height 0.5s ease;
+        }
+
+        .stat-box:hover::before {
+            height: 100%;
+        }
+
+        .stat-number {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            color: var(--text-main);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-top: 10px;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: flex-start;
+            max-width: 800px;
+        }
+
+        .skill-tag {
+            padding: 15px 30px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .skill-tag img {
+            width: 24px;
+            height: 24px;
+            filter: grayscale(100%) brightness(200%);
+            transition: 0.4s;
+        }
+
+        .skill-tag:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .skill-tag:hover img {
+            filter: grayscale(0%) brightness(100%);
+        }
+
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .project-row {
+            display: grid;
+            grid-template-columns: 0.5fr 2fr 1fr;
+            padding: 50px 0;
+            border-bottom: 1px solid var(--glass-border);
+            align-items: center;
+            transition: background 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-row::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.05), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .project-row:hover::before {
+            transform: translateX(100%);
+        }
+
+        .project-number {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--text-dim);
+            z-index: 1;
+        }
+
+        .project-details {
+            z-index: 1;
+        }
+
+        .project-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .project-row:hover .project-title {
+            color: var(--gold);
+        }
+
+        .project-desc {
+            color: var(--text-dim);
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 500px;
+        }
+
+        .project-action {
+            justify-self: end;
+            z-index: 1;
+        }
+
+        .ethereal-btn {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s;
+        }
+
+        .ethereal-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gold);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+            z-index: -1;
+        }
+
+        .ethereal-btn:hover {
+            border-color: var(--gold);
+            color: var(--bg-base);
+        }
+
+        .ethereal-btn:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .contact-container {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+        }
+
+        .contact-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .contact-text {
+            color: var(--text-dim);
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .social-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .social-link {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: var(--text-main);
+            text-decoration: none;
+            transition: all 0.4s;
+        }
+
+        .social-link:hover {
+            background: var(--gold);
+            color: var(--bg-base);
+            border-color: var(--gold);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px var(--gold-glow);
+        }
+
+        footer {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            mix-blend-mode: difference;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .project-action {
+                justify-self: start;
+            }
+
+            nav {
+                padding: 20px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            * {
+                cursor: auto !important;
+            }
+
+            .cursor-ring {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="preloader">
+        <div class="loader-ring">
+            <span class="loader-text">AWAKEN</span>
+        </div>
+    </div>
+
+    <!-- The 3D Canvas Background -->
+    <canvas id="webgl-canvas"></canvas>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-ring" id="cursor">
+        <div class="cursor-dot"></div>
+    </div>
+
+    <nav>
+        <div class="logo magnetic-target">S.P.</div>
+        <div class="nav-links">
+            <a href="#genesis" class="magnetic-target">Genesis</a>
+            <a href="#monoliths" class="magnetic-target">Monoliths</a>
+            <a href="#artifacts" class="magnetic-target">Artifacts</a>
+            <a href="#convergence" class="magnetic-target">Convergence</a>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <!-- Hero Section -->
+        <section id="hero" class="hero">
+            <div class="title-wrapper">
+                <h1 class="hero-title" id="hero-title-1">SIVASAI</h1>
+            </div>
+            <div class="title-wrapper">
+                <h1 class="hero-title" id="hero-title-2">PEPAKAYALA</h1>
+            </div>
+            <p class="hero-subtitle">Digital Creator & Visionary Architect</p>
+        </section>
+
+        <!-- About Section -->
+        <section id="genesis">
+            <h2 class="section-header scroll-fade">Genesis</h2>
+            <div class="about-grid">
+                <div class="about-text scroll-fade">
+                    I am <span>Sivasai Pepakayala</span>, an architect of digital experiences currently forged at
+                    Pragati Engineering College (Class of 2027).<br><br>
+                    My domain lies at the intersection of <span class="highlight">Full-Stack Architecture</span> and
+                    Artificial Intelligence. I do not just write code; I construct breathing ecosystems, merging logic
+                    with high-end aesthetic design.<br><br>
+                    Armed with a <span>Salesforce AI Associate</span> certification and mastery over tools like Vertex
+                    AI and Google Cloud, I transform abstract data into tangible, beautiful realities. When I am not
+                    forging new algorithms, I am expanding my consciousness across new paradigms of the web.
+                </div>
+                <div class="stats-container scroll-fade">
+                    <div class="stat-box">
+                        <div class="stat-number">2027</div>
+                        <div class="stat-label">Extraction Year</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Paradigms Mastered</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="monoliths">
+            <h2 class="section-header scroll-fade" style="justify-content: flex-end; flex-direction: row-reverse;">
+                <span style="display:block; width:100px; height:1px; background:var(--gold);"></span> Monoliths
+            </h2>
+            <div class="skills-container scroll-fade" style="margin-left: auto;">
+                <!-- Using Devicons for reliable SVGs -->
+                <a href="#" class="skill-tag magnetic-target"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
+                    Java</a>
+                <a href="#" class="skill-tag magnetic-target"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                        alt="Python"> Python</a>
+                <a href="#" class="skill-tag magnetic-target"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
+                        alt="C++"> C++</a>
+                <a href="#" class="skill-tag magnetic-target"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                        alt="JS"> JavaScript</a>
+                <a href="#" class="skill-tag magnetic-target"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
+                    React</a>
+                <a href="#" class="skill-tag magnetic-target"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node">
+                    Node.js</a>
+                <a href="#" class="skill-tag magnetic-target"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+                        alt="MongoDB"> MongoDB</a>
+                <a href="#" class="skill-tag magnetic-target"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
+                    MySQL</a>
+                <a href="#" class="skill-tag magnetic-target"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg"
+                        alt="GCP"> Google Cloud</a>
+                <a href="#" class="skill-tag magnetic-target"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML">
+                    HTML/CSS</a>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="artifacts">
+            <h2 class="section-header scroll-fade">Artifacts</h2>
+            <div class="projects-list">
+
+                <div class="project-row scroll-fade">
+                    <div class="project-number">I.</div>
+                    <div class="project-details">
+                        <h3 class="project-title">Traffic Intelligence</h3>
+                        <p class="project-desc">A neural-network driven monitoring system optimizing metropolitan
+                            vehicle flow through real-time autonomous data streaming.</p>
+                        <p style="color:var(--gold); margin-top:10px; font-size:0.8rem; letter-spacing:1px;">AI / PYTHON
+                            / GCP</p>
+                    </div>
+                    <div class="project-action">
+                        <button class="ethereal-btn magnetic-target">Inspect</button>
+                    </div>
+                </div>
+
+                <div class="project-row scroll-fade">
+                    <div class="project-number">II.</div>
+                    <div class="project-details">
+                        <h3 class="project-title">CarbonCount</h3>
+                        <p class="project-desc">A highly visual algorithmic dashboard helping global citizens analyze
+                            and minimize their daily environmental footprint.</p>
+                        <p style="color:var(--gold); margin-top:10px; font-size:0.8rem; letter-spacing:1px;">REACT /
+                            NODE / MONGODB</p>
+                    </div>
+                    <div class="project-action">
+                        <button class="ethereal-btn magnetic-target">Inspect</button>
+                    </div>
+                </div>
+
+                <div class="project-row scroll-fade">
+                    <div class="project-number">III.</div>
+                    <div class="project-details">
+                        <h3 class="project-title">Alpha Gen</h3>
+                        <p class="project-desc">A SAAS platform executing rapid deployment of personalized WebGL
+                            architectures integrated with headless CMS.</p>
+                        <p style="color:var(--gold); margin-top:10px; font-size:0.8rem; letter-spacing:1px;">THREE.JS /
+                            REACT / SQL</p>
+                    </div>
+                    <div class="project-action">
+                        <button class="ethereal-btn magnetic-target">Inspect</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="convergence">
+            <div class="contact-container scroll-fade">
+                <h2 class="contact-title">Initiate Convergence</h2>
+                <p class="contact-text">Currently open for alliances, high-level internships, and visionary freelance
+                    collaborations. Step into the light and forge a connection.</p>
+
+                <a href="mailto:sivasai@example.com" class="ethereal-btn magnetic-target"
+                    style="padding: 20px 50px; font-size: 1rem;">Transmit Signal</a>
+
+                <div class="social-grid">
+                    <a href="#" class="social-link magnetic-target" title="LinkedIn"><i
+                            class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="#" class="social-link magnetic-target" title="GitHub"><i
+                            class="fa-brands fa-github"></i></a>
+                    <a href="#" class="social-link magnetic-target" title="LeetCode"><i
+                            class="fa-solid fa-code"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 Sivasai Pepakayala. Engineered for the Future.</p>
+        </footer>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. CUSTOM CURSOR & MAGNETIC EFFECT
+        // ==========================================
+        const cursor = document.getElementById('cursor');
+        const magneticTargets = document.querySelectorAll('.magnetic-target');
+
+        let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+        let cursorObj = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+
+        if (window.matchMedia("(pointer: fine)").matches) {
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+
+            // Smooth interpolation for cursor ring
+            const lerp = (start, end, amt) => (1 - amt) * start + amt * end;
+
+            const renderCursor = () => {
+                cursorObj.x = lerp(cursorObj.x, mouse.x, 0.15);
+                cursorObj.y = lerp(cursorObj.y, mouse.y, 0.15);
+                cursor.style.transform = `translate(${cursorObj.x}px, ${cursorObj.y}px)`;
+                requestAnimationFrame(renderCursor);
+            };
+            renderCursor();
+
+            // Magnetic button logic
+            magneticTargets.forEach(target => {
+                target.addEventListener('mousemove', (e) => {
+                    const rect = target.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+
+                    gsap.to(target, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: 'power2.out' });
+                    cursor.classList.add('active');
+                });
+
+                target.addEventListener('mouseleave', () => {
+                    gsap.to(target, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.3)' });
+                    cursor.classList.remove('active');
+                });
+            });
+        }
+
+        // ==========================================
+        // 2. THREE.JS HYPER-REALISTIC ETHEREAL CORE
+        // ==========================================
+        const canvas = document.getElementById('webgl-canvas');
+        const scene = new THREE.Scene();
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.z = 10;
+
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // Group to hold the complex object
+        const coreGroup = new THREE.Group();
+        scene.add(coreGroup);
+
+        // --- Material: Physical Glass/Gemstone ---
+        // Creates a hyper-realistic refracting material
+        const glassMaterial = new THREE.MeshPhysicalMaterial({
+            color: 0xffffff,
+            metalness: 0.1,
+            roughness: 0.05,
+            transmission: 1, // Glass transparency
+            thickness: 2.0,   // Refraction volume
+            ior: 1.5,         // Index of Refraction (like glass)
+            clearcoat: 1,
+            clearcoatRoughness: 0.1,
+            side: THREE.DoubleSide
+        });
+
+        // --- Geometry: High-res Icosahedron for morphing ---
+        const geometry = new THREE.IcosahedronGeometry(2, 16);
+
+        // Save original vertices for the morphing animation
+        const positionAttribute = geometry.attributes.position;
+        const vertex = new THREE.Vector3();
+        const originalVertices = [];
+        for (let i = 0; i < positionAttribute.count; i++) {
+            vertex.fromBufferAttribute(positionAttribute, i);
+            originalVertices.push(vertex.clone());
+        }
+
+        const etherealMesh = new THREE.Mesh(geometry, glassMaterial);
+        coreGroup.add(etherealMesh);
+
+        // Inner glowing core (Wireframe)
+        const innerGeo = new THREE.IcosahedronGeometry(1.5, 1);
+        const innerMat = new THREE.MeshBasicMaterial({ color: 0xd4af37, wireframe: true, transparent: true, opacity: 0.3 });
+        const innerMesh = new THREE.Mesh(innerGeo, innerMat);
+        coreGroup.add(innerMesh);
+
+        // --- Lighting ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+        scene.add(ambientLight);
+
+        // Moving Point lights to create dynamic refractions through the glass
+        const light1 = new THREE.PointLight(0xd4af37, 2, 50); // Gold light
+        scene.add(light1);
+        const light2 = new THREE.PointLight(0xffffff, 2, 50); // White light
+        scene.add(light2);
+        const light3 = new THREE.PointLight(0x00aaff, 1, 50); // Subtle blue accent
+        scene.add(light3);
+
+        // ==========================================
+        // 3. ANIMATION & INTERACTION LOOP
+        // ==========================================
+        const clock = new THREE.Clock();
+
+        // Mouse 3D tracking
+        let mouseX3D = 0;
+        let mouseY3D = 0;
+        document.addEventListener('mousemove', (event) => {
+            mouseX3D = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY3D = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        function animate3D() {
+            requestAnimationFrame(animate3D);
+            const time = clock.getElapsedTime();
+
+            // 1. Organic Vertex Morphing (The "Breathing" effect)
+            for (let i = 0; i < positionAttribute.count; i++) {
+                const orig = originalVertices[i];
+                // Math to create flowing, organic distortions based on time and position
+                const length = orig.length();
+                const offset = 0.2 * Math.sin(orig.x * 2.0 + time * 1.5) * Math.cos(orig.y * 2.0 + time * 1.5);
+
+                vertex.copy(orig).normalize().multiplyScalar(length + offset);
+                positionAttribute.setXYZ(i, vertex.x, vertex.y, vertex.z);
+            }
+            positionAttribute.needsUpdate = true;
+            geometry.computeVertexNormals(); // Crucial for lighting/refraction updates
+
+            // 2. Base Rotation
+            coreGroup.rotation.y += 0.002;
+            coreGroup.rotation.x += 0.001;
+            innerMesh.rotation.y -= 0.005;
+            innerMesh.rotation.x += 0.003;
+
+            // 3. Object follows mouse slightly
+            gsap.to(coreGroup.rotation, {
+                x: -mouseY3D * 0.3,
+                y: mouseX3D * 0.3,
+                duration: 2,
+                ease: "power2.out",
+                overwrite: "auto"
+            });
+
+            // 4. Orbiting Lights (Creates dynamic refractions)
+            light1.position.x = Math.sin(time * 0.7) * 4;
+            light1.position.z = Math.cos(time * 0.7) * 4;
+            light1.position.y = Math.sin(time * 0.5) * 4;
+
+            light2.position.x = Math.cos(time * 0.3) * 5;
+            light2.position.z = Math.sin(time * 0.3) * 5;
+            light2.position.y = Math.cos(time * 0.6) * 5;
+
+            renderer.render(scene, camera);
+        }
+        animate3D();
+
+        // Handle Resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // ==========================================
+        // 4. GSAP SCROLL ANIMATIONS & BOOT SEQUENCE
+        // ==========================================
+        gsap.registerPlugin(ScrollTrigger);
+
+        window.addEventListener("load", () => {
+            // Text Splitting for Hero
+            const title1 = new SplitType('#hero-title-1', { types: 'chars' });
+            const title2 = new SplitType('#hero-title-2', { types: 'chars' });
+
+            // Boot Sequence
+            const tl = gsap.timeline();
+
+            tl.to("#preloader", {
+                opacity: 0,
+                duration: 1.5,
+                delay: 1,
+                ease: "power2.inOut",
+                onComplete: () => document.getElementById("preloader").style.display = "none"
+            })
+                // Animate Characters up
+                .from(title1.chars, {
+                    y: 100,
+                    opacity: 0,
+                    rotateX: -90,
+                    stagger: 0.05,
+                    duration: 1.2,
+                    ease: "back.out(1.7)"
+                }, "-=0.5")
+                .from(title2.chars, {
+                    y: 100,
+                    opacity: 0,
+                    rotateX: -90,
+                    stagger: 0.05,
+                    duration: 1.2,
+                    ease: "back.out(1.7)"
+                }, "-=0.9")
+                .to(".hero-subtitle", {
+                    opacity: 1,
+                    y: -20,
+                    duration: 1,
+                    letterSpacing: "4px",
+                    ease: "power3.out"
+                }, "-=0.5");
+
+            // --- ScrollTrigger: Tie 3D Object to Scroll ---
+            // As user scrolls, the 3D core moves down and scales
+            ScrollTrigger.create({
+                trigger: "body",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1,
+                onUpdate: (self) => {
+                    const prog = self.progress;
+                    // Move the core down slightly
+                    gsap.to(coreGroup.position, {
+                        y: -prog * 5,
+                        z: prog * 2, // Moves closer to camera
+                        duration: 0.5
+                    });
+
+                    // Change inner core color based on scroll (Gold to Deep Blue)
+                    const r = Math.floor(212 - (212 - 0) * prog);
+                    const g = Math.floor(175 - (175 - 170) * prog);
+                    const b = Math.floor(55 + (255 - 55) * prog);
+                    innerMat.color.setRGB(r / 255, g / 255, b / 255);
+                }
+            });
+
+            // --- ScrollTrigger: Reveal HTML Elements ---
+            const revealElements = document.querySelectorAll('.scroll-fade');
+            revealElements.forEach((el) => {
+                gsap.from(el, {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%", // Triggers when top of element is 85% down viewport
+                        toggleActions: "play none none reverse"
+                    },
+                    y: 60,
+                    opacity: 0,
+                    duration: 1.5,
+                    ease: "power3.out"
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
