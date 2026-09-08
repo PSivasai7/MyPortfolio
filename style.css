@@ -49,6 +49,7 @@ header {
     display: flex;
 }
 
+
 .navbox2 {
     /* display: none; */
     /* color: white; */
@@ -227,7 +228,7 @@ h1:hover {
     padding: 10px 10px;
     margin: 20px 10px;
     /* height: 100px;
-       width: 100px;  */
+    width: 100px;  */
     box-sizing: border-box;
     cursor: pointer;
     transition-duration: 1s;
@@ -245,15 +246,21 @@ h1:hover {
     top: -40px;
     left: -35px;
     border: 4px solid ;
-  
-} */
-
+    
+    } */
 
 .skillbox:hover {
+    transform: translate(10px, -15px);
+    /* transition-duration: 1s; */
+    border: 3px solid black;
+    /* border-right: 12px groove rgb(255, 255, 255); */
+}
+
+/* .skillbox:hover {
     transform: matrix(33) box-shadow: inset -5px -5px .2px .2px rgb(85, 85, 85);
 
 
-}
+} */
 
 .skillbox a {
     text-decoration: none;
