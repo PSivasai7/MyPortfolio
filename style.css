@@ -448,3 +448,53 @@ h1:hover {
     font-family: cursive;
     margin-bottom: 3rem;
 }
+
+.ceritificates {
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+
+}
+
+.certs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 300px;
+    width: 300px;
+    box-shadow: .3px .5px .4px 3px grey;
+    border-radius: 1.3em;
+    cursor: pointer;
+
+}
+
+#cerhed {
+    color: #2c4bff;
+    width: 100vw;
+    cursor: pointer;
+    --s: 0.1em;
+    /* the thickness of the line */
+    --c: #2c4bff;
+    display: inline-block;
+    font-family: system-ui, sans-serif;
+    font-size: 3rem;
+    cursor: pointer;
+    color: #0000;
+    padding-bottom: var(--s);
+    background:
+        linear-gradient(90deg, var(--c) 50%, #000 0) calc(100% - var(--_p, 0%))/200% 100%,
+        linear-gradient(var(--c) 0 0) 0% 100%/var(--_p, 0%) var(--s) no-repeat;
+    -webkit-background-clip: text, padding-box;
+    background-clip: text, padding-box;
+    transition: .5s;
+}
+
+#cerhed:hover {
+    --_p: 100%;
+}
