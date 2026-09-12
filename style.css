@@ -8,9 +8,9 @@ body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: #fff;
     color: black;
-    position: relative;
+    overflow-x: hidden;
     scroll-behavior: smooth;
-    /* color: #ec9518; */
+    transition-duration: 2s;
 
 }
 
@@ -497,4 +497,48 @@ h1:hover {
 
 #cerhed:hover {
     --_p: 100%;
+}
+
+.contact {
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 3rem;
+    margin-bottom: 5rem;
+    box-sizing: content-box;
+}
+
+.contact form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    gap: 1.4rem;
+    box-shadow: inset .1px .2px 2.5px .6px grey;
+    padding: 3rem;
+    width: 30vw;
+    margin: auto;
+    border-radius: 30px;
+}
+
+.contact form input {
+    padding: .3rem .5rem;
+    outline: none;
+    border: 2px solid;
+    /* border-radius: 10px; */
+    border: none;
+    border-bottom: 4px solid blue;
+}
+
+.contact form input[type="submit"] {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    background: rgb(11, 165, 248);
+    border-radius: .72rem;
+    color: whitesmoke;
+    font-family: cursive;
+    font-weight: 900;
+
 }
