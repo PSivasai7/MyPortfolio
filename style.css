@@ -10,7 +10,7 @@ body {
     color: black;
     overflow-x: hidden;
     scroll-behavior: smooth;
-    transition-duration: 2s;
+    /* transition-duration: .5s; */
 
 }
 
@@ -86,9 +86,9 @@ header {
 }
 
 .Introsec {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .toggle {
@@ -102,6 +102,7 @@ header {
 }
 
 .aboutsec {
+    height: 100vh;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -297,7 +298,7 @@ h1:hover {
     font-size: 80px;
     display: flex;
     position: absolute;
-    top: 20vh;
+    top: 30vh;
     left: 50%;
     transform: translateX(-50%);
     user-select: none;
@@ -341,6 +342,7 @@ h1:hover {
 }
 
 .projects {
+    height: 100vh;
     display: flex;
     padding-top: 100px;
 }
@@ -365,6 +367,7 @@ h1:hover {
 }
 
 .platforms {
+    height: 50vh;
     margin-top: 200px;
     display: flex;
     flex-direction: column;
@@ -405,7 +408,7 @@ h1:hover {
 
 .achievements {
     margin-top: 4rem;
-    ;
+    height: 50vh;
     display: flex;
     flex-direction: column;
 
@@ -450,6 +453,7 @@ h1:hover {
 }
 
 .ceritificates {
+    height: 100vh;
     display: flex;
     flex-direction: row;
     gap: 3rem;
@@ -516,19 +520,18 @@ h1:hover {
     justify-content: space-around;
     gap: 1.4rem;
     box-shadow: inset .1px .2px 2.5px .6px grey;
-    padding: 3rem;
+    padding: 2rem;
     width: 30vw;
     margin: auto;
     border-radius: 30px;
 }
 
 .contact form input {
-    padding: .3rem .5rem;
+    padding: .3rem .7rem;
     outline: none;
-    border: 2px solid;
     /* border-radius: 10px; */
     border: none;
-    border-bottom: 4px solid blue;
+    border-bottom: 4px ridge blue;
 }
 
 .contact form input[type="submit"] {
