@@ -545,3 +545,13 @@ h1:hover {
     font-weight: 900;
 
 }
+
+footer {
+    height: 40vh;
+    width: 100vw;
+    background: grey;
+    color: whitesmoke;
+    font-size: large;
+    text-align: center;
+    padding: 2em;
+}
