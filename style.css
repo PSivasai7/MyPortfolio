@@ -511,6 +511,7 @@ h1:hover {
     margin-top: 3rem;
     margin-bottom: 5rem;
     box-sizing: content-box;
+    text-align: center;
 }
 
 .contact form {
