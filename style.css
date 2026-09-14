@@ -103,7 +103,7 @@ header {
 
 .aboutsec {
     height: 100vh;
-    padding: 10px;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     gap: 4rem;
@@ -117,7 +117,7 @@ header {
     /* the color */
     display: inline-block;
     font-family: system-ui, sans-serif;
-    font-size: 3rem;
+    font-size: 2.4rem;
     cursor: pointer;
     color: #0000;
     padding-bottom: var(--s);
@@ -127,11 +127,13 @@ header {
     -webkit-background-clip: text, padding-box;
     background-clip: text, padding-box;
     transition: 0.5s;
+    --_p: 100%;
     /* margin-bottom: 20px; */
 }
 
 h1:hover {
-    --_p: 100%;
+    --_p: 15%;
+    --c: red;
 }
 
 .aboutsec .boxes {
@@ -208,7 +210,35 @@ h1:hover {
 .skills {
     height: 100vh;
     width: 100%;
+    padding: 0.3em;
     /* border: 2px solid black; */
+}
+
+.skills h2 {
+    width: 100%;
+    --s: 0.1em;
+    /* the thickness of the line */
+    --c: #2c4bff;
+    /* the color */
+    display: inline-block;
+    font-family: system-ui, sans-serif;
+    font-size: 2.4rem;
+    cursor: pointer;
+    color: #0000;
+    padding-bottom: var(--s);
+    background:
+        linear-gradient(90deg, var(--c) 50%, #000 0) calc(100% - var(--_k, 0%))/200% 100%,
+        linear-gradient(var(--c) 0 0) 0% 100%/var(--_k, 0%) var(--s) no-repeat;
+    -webkit-background-clip: text, padding-box;
+    background-clip: text, padding-box;
+    transition: 0.5s;
+    --_k: 100%;
+    margin-bottom: 2em;
+}
+
+.skills h2:hover {
+    --_k: 16%;
+    --c: red;
 }
 
 .skillboxes {
@@ -487,7 +517,7 @@ h1:hover {
     --c: #2c4bff;
     display: inline-block;
     font-family: system-ui, sans-serif;
-    font-size: 3rem;
+    font-size: 2.4rem;
     cursor: pointer;
     color: #0000;
     padding-bottom: var(--s);
@@ -497,10 +527,12 @@ h1:hover {
     -webkit-background-clip: text, padding-box;
     background-clip: text, padding-box;
     transition: .5s;
+    --_p: 100%;
 }
 
 #cerhed:hover {
-    --_p: 100%;
+    --_p: 20%;
+    --c: red;
 }
 
 .contact {
