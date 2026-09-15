@@ -8,7 +8,7 @@
 body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: #fff;
-    color: black;
+    /* color: black; */
     overflow-x: hidden;
     scroll-behavior: smooth;
     /* transition-duration: .5s; */
@@ -96,11 +96,7 @@ header {
     height: 400px;
 }
 
-.dark {
-    background-color: black;
-    color: white;
 
-}
 
 .aboutsec {
     height: 100vh;
@@ -134,7 +130,7 @@ header {
 
 h1:hover {
     --_p: 15%;
-    --c: red;
+    --c: rgb(255, 0, 0);
 }
 
 .aboutsec .boxes {
@@ -406,6 +402,7 @@ h1:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    color: #000;
 
 }
 
@@ -565,6 +562,7 @@ h1:hover {
 .contact form input {
     padding: .3rem .7rem;
     outline: none;
+    background-color: transparent;
     /* border-radius: 10px; */
     border: none;
     border-bottom: 4px ridge blue;
@@ -590,4 +588,23 @@ footer {
     font-size: large;
     text-align: center;
     padding: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+footer ul li {
+    padding: 0.4rem;
+    list-style: none;
+}
+
+footer ul li a {
+    text-decoration: underline;
+    color: #fffefe;
+}
+
+.dark {
+    background-color: black;
+    color: white;
+
 }
