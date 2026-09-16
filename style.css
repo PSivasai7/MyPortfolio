@@ -559,7 +559,9 @@ h1:hover {
     border-radius: 30px;
 }
 
-.contact form input {
+.contact form input,
+textarea {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     padding: .3rem .7rem;
     outline: none;
     background-color: transparent;
@@ -575,7 +577,7 @@ h1:hover {
     background: rgb(11, 165, 248);
     border-radius: .72rem;
     color: whitesmoke;
-    font-family: cursive;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: 900;
 
 }
