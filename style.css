@@ -508,6 +508,11 @@ h1:hover {
 
 }
 
+.certs img {
+    height: 80%;
+    width: 80%;
+}
+
 #cerhed {
     color: #2c4bff;
     width: 100vw;
