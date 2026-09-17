@@ -93,7 +93,7 @@ header {
 }
 
 .toggle {
-    height: 400px;
+    height: 500px;
 }
 
 
@@ -612,6 +612,11 @@ footer ul li a {
 
 .dark {
     background-color: black;
+    color: white;
+
+}
+
+.darkwhite {
     color: white;
 
 }
