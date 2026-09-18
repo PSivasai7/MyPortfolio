@@ -590,14 +590,17 @@ textarea {
 footer {
     height: 40vh;
     width: 100vw;
-    background: grey;
-    color: whitesmoke;
+    background: rgba(128, 126, 126, 0.341);
+    color: rgb(9, 9, 9);
     font-size: large;
     text-align: center;
-    padding: 2em;
+    padding: 2em 5rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    border-top: 3px ridge black;
+    border-bottom: 3px ridge black;
+    margin-bottom: .5rem;
 }
 
 footer ul li {
@@ -607,7 +610,7 @@ footer ul li {
 
 footer ul li a {
     text-decoration: underline;
-    color: #fffefe;
+    color: #000000;
 }
 
 .dark {
