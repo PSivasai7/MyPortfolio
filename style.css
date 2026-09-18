@@ -484,11 +484,12 @@ h1:hover {
 
 .ceritificates {
     height: 100vh;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    /* flex-direction: row;
     gap: 3rem;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-wrap: wrap; */
+    justify-content: space-evenly;
     align-items: center;
     padding: 2rem;
 
@@ -500,18 +501,37 @@ h1:hover {
     justify-content: center;
     align-items: center;
     text-align: center;
+    padding: 0.5em .7rem;
     height: 200px;
     width: 200px;
     box-shadow: .3px .5px .4px 3px grey;
     border-radius: 1.3em;
     cursor: pointer;
+    transform: rotateZ(0deg);
+    transition-duration: 1s;
 
 }
 
+
 .certs img {
+    transition-duration: 0.7s;
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* transition-delay: 999999999s; */
     height: 80%;
     width: 80%;
 }
+
+.rot {
+    transition-duration: 2s;
+    transform: scale(1.1);
+    /* transform: rotateZ(360deg); */
+}
+
+.certs.rot img {
+    transform: rotate(360deg);
+    /* Adjust degrees (e.g., 45deg, 90deg, 360deg) as needed */
+}
+
 
 #cerhed {
     color: #2c4bff;
