@@ -524,14 +524,14 @@ h1:hover {
 .rot {
     transition-duration: 2s;
     transform: scale(1.1);
+    box-shadow: inset 3px 3px 3px 2px rgb(116, 113, 113);
     /* transform: rotateZ(360deg); */
 }
 
-.certs.rot img {
-    transform: rotate(360deg);
-    /* Adjust degrees (e.g., 45deg, 90deg, 360deg) as needed */
-}
-
+/* .certs.rot img {
+    /* transform: rotate(360deg); */
+/* Adjust degrees (e.g., 45deg, 90deg, 360deg) as needed 
+ } */
 
 #cerhed {
     color: #2c4bff;
