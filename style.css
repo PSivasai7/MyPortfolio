@@ -48,7 +48,8 @@ header {
     background-color: #ffffff53;
     cursor: pointer;
     z-index: 9999;
-    background: white;
+    background: transparent;
+    backdrop-filter: blur(2px);
 
 }
 
@@ -422,6 +423,41 @@ header {
     padding: 20px;
     border-radius: 12px;
     cursor: pointer;
+    backface-visibility: visible;
+    transition-duration: 1s;
+    display: flex;
+    flex-direction: column;
+    gap: 2.9rem;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.pro .btnspro {
+    visibility: hidden;
+}
+
+.pro .btnspro a {
+    color: rgb(255, 255, 255);
+    font-weight: 900;
+    text-decoration: none;
+    padding: .4rem;
+    margin: 0.5rem;
+    border: 2px solid blue;
+    background-color: blue;
+    border-radius: 40px;
+    box-shadow: .3px 8px 4px .3px rgba(155, 197, 204, 0.751);
+}
+
+.prohover {
+    backdrop-filter: blur(23px);
+    transform: rotateY(180deg);
+    color: transparent;
+    background-color: rgba(219, 211, 211, 0.547);
+}
+
+.contentprovisible {
+    visibility: visible;
+    transform: translateY(180deg);
 }
 
 .platforms {

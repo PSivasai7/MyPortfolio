@@ -259,16 +259,28 @@
             <h2>Traffic Intelligence</h2>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt, ratione. Fugit voluptatem iste non
                 sit voluptas consequatur repellendus inventore blanditiis commodi quos.</p>
+            <p class="btnspro">
+                <span><a href="">Github</a></span>
+                <span><a href="">LiveLink</a></span>
+            </p>
         </div>
         <div id="project2" class="pro">
             <h2>Portfolio Generator</h2>
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus, aliquid recusandae voluptate magni,
                 unde doloremque natus eos fugiat officiis voluptatibus error ad?</p>
+            <p class="btnspro">
+                <span><a href="">Github</a></span>
+                <span><a href="">LiveLink</a></span>
+            </p>
         </div>
         <div id="project3" class="pro">
             <h2>CarbonCount</h2>
             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed iste quia, quisquam ullam ea vel quos
                 suscipit. Eos commodi earum vel enim?</p>
+            <p class="btnspro">
+                <span><a href="">Github</a></span>
+                <span><a href="">LiveLink</a></span>
+            </p>
         </div>
 
     </div>
@@ -368,9 +380,19 @@
             box.addEventListener("mouseenter", () => {
                 box.classList.toggle("rot");
             })
-        })
+        });
 
+        const probox = document.querySelectorAll(".pro");
+        probox.forEach((p) => {
+            p.addEventListener("click", () => {
+                p.classList.toggle("prohover");
+                getvisible(p);
 
+            })
+        });
+        function getvisible(p) {
+            p.classList.toggle("contentprovisible");
+        }
     </script>
 </body>
 
