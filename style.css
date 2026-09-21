@@ -510,11 +510,20 @@ header {
     gap: 2rem;
 }
 
-.plat div {
+
+
+.cons {
     border: 3px ridge;
     border-radius: 12px;
     padding: .5rem;
     text-align: center;
+    transition-duration: 1s;
+}
+
+.cons:hover {
+    box-shadow: .5px .6px .3px .5px grey;
+    transform: translateY(12px);
+
 }
 
 
