@@ -461,13 +461,14 @@ header {
 }
 
 .platforms {
-    height: 50vh;
-    margin-top: 200px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     color: #000;
+    margin: 5rem 0rem;
+
 
 }
 
@@ -501,18 +502,45 @@ header {
 }
 
 .platforms>.plat {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    justify-content: space-between;
     padding-top: 50px;
+    padding: 3rem;
+    gap: 2rem;
 }
 
-.platforms .plat div {
+.plat div {
+    border: 3px ridge;
+    border-radius: 12px;
+    padding: .5rem;
+    text-align: center;
+}
+
+
+.plat>div .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    width: 190px;
+    cursor: pointer;
+}
+
+.plat>div .logo img {
+    height: 100%;
+    width: 100%;
+    padding: .5rem;
+}
+
+/* .platforms .plat div {
     margin: .6rem;
     border: 3px ridge;
     padding: .7rem;
     border-radius: 20px;
     cursor: pointer;
 
-}
+} */
 
 .platforms .plat a {
     text-decoration: none;
