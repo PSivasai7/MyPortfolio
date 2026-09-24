@@ -275,11 +275,11 @@ header {
     width: 9em;
     margin: auto;
     padding: 0.6rem 2rem;
-    background-color: #f5b106;
+    background-color: #a6a9ab9a;
     border-radius: 19px;
     border: none;
     text-align: center;
-    color: white;
+    color: rgb(0, 0, 0);
     font-weight: 900;
     position: relative;
     top: 110px;
@@ -819,4 +819,70 @@ footer ul li a {
 .darkwhite {
     color: white;
 
+}
+
+/* effect by cgpt for project sectionn */
+.projects {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
+
+.pro {
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.pro-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 250px;
+    transform-style: preserve-3d;
+    transition: transform 0.7s ease;
+}
+
+.pro.flipped .pro-inner {
+    transform: rotateY(180deg);
+}
+
+.pro-front,
+.pro-back {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: inherit;
+}
+
+.pro-front {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pro-back {
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.btnspro {
+    display: flex;
+    gap: 15px;
+}
+
+.btnspro a {
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
 }
