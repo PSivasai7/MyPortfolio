@@ -256,34 +256,56 @@
     </div>
     <h2 id="projee"> Projects</h2>
     <div class="projects" id="proj">
-        <div id="project1" class="pro">
-            <h2>Traffic Intelligence</h2>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt, ratione. Fugit voluptatem iste non
-                sit voluptas consequatur repellendus inventore blanditiis commodi quos.</p>
-            <p class="btnspro">
-                <span><a href="">Github</a></span>
-                <span><a href="">LiveLink</a></span>
-            </p>
-        </div>
-        <div id="project2" class="pro">
-            <h2>Portfolio Generator</h2>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus, aliquid recusandae voluptate magni,
-                unde doloremque natus eos fugiat officiis voluptatibus error ad?</p>
-            <p class="btnspro">
-                <span><a href="">Github</a></span>
-                <span><a href="">LiveLink</a></span>
-            </p>
-        </div>
-        <div id="project3" class="pro">
-            <h2>CarbonCount</h2>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sed iste quia, quisquam ullam ea vel quos
-                suscipit. Eos commodi earum vel enim?</p>
-            <p class="btnspro">
-                <span><a href="">Github</a></span>
-                <span><a href="">LiveLink</a></span>
-            </p>
+        <div class="pro" id="project1">
+            <div class="pro-inner">
+                <div class="pro-front">
+                    <h2>Traffic Intelligence</h2>
+                    <p>Your existing project description</p>
+                    <span>Click to explore ↻</span>
+                </div>
+                <div class="pro-back">
+                    <h2>Explore Project</h2>
+                    <div class="btnspro">
+                        <a href="YOUR_GITHUB_URL" target="_blank">GitHub</a>
+                        <a href="YOUR_LIVE_URL" target="_blank">LiveLink</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <div class="pro" id="project2">
+            <div class="pro-inner">
+                <div class="pro-front">
+                    <h2>Portfolio Generator</h2>
+                    <p>Your existing project description</p>
+                    <span>Click to explore ↻</span>
+                </div>
+                <div class="pro-back">
+                    <h2>Explore Project</h2>
+                    <div class="btnspro">
+                        <a href="YOUR_GITHUB_URL" target="_blank">GitHub</a>
+                        <a href="YOUR_LIVE_URL" target="_blank">LiveLink</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pro" id="project3">
+            <div class="pro-inner">
+                <div class="pro-front">
+                    <h2>CarbonCount</h2>
+                    <p>Your existing project description</p>
+                    <span>Click to explore ↻</span>
+                </div>
+                <div class="pro-back">
+                    <h2>Explore Project</h2>
+                    <div class="btnspro">
+                        <a href="YOUR_GITHUB_URL" target="_blank">GitHub</a>
+                        <a href="YOUR_LIVE_URL" target="_blank">LiveLink</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="platforms" id="plats">
         <h2>Platforms</h2>
@@ -387,16 +409,15 @@
         });
 
         const probox = document.querySelectorAll(".pro");
-        probox.forEach((p) => {
-            p.addEventListener("click", () => {
-                p.classList.toggle("prohover");
-                getvisible(p);
 
-            })
+        probox.forEach((card) => {
+            card.addEventListener("click", (event) => {
+                if (event.target.closest("a")) return;
+
+                card.classList.toggle("flipped");
+            });
         });
-        function getvisible(p) {
-            p.classList.toggle("contentprovisible");
-        }
+
     </script>
 </body>
 
