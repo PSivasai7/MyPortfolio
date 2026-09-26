@@ -389,7 +389,7 @@ header {
     box-sizing: border-box;
     cursor: pointer;
     transition-duration: 1s;
-    border-left: 12px groove rgb(255, 255, 255);
+    /* border-left: 12px groove rgb(255, 255, 255); */
 
 }
 
